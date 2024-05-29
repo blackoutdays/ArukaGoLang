@@ -8,6 +8,11 @@ import (
 	"github.com/tebeka/selenium"
 )
 
+const (
+	chromeDriverPath = "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver" // replace with your driver
+	port             = 8080
+)
+
 func main() {
 	var opts []selenium.ServiceOption
 	selenium.SetDebug(false)
@@ -132,60 +137,96 @@ func main() {
 		//Wait for the page to load
 		time.Sleep(5 * time.Second)
 
+		// Find the
+		sortBySquare, err := wd.FindElement(selenium.ByXPATH, "//span[@class='icon main-tab__info--edit active-icon']")
+		if err != nil {
+			log.Fatalf("Error finding the edit: %v", err)
+		}
+
+		// Click on the edit element
+		err = sortBySquare.Click()
+		if err != nil {
+			log.Fatalf("Error clicking the edit: %v", err)
+		}
+
+		time.Sleep(5 * time.Second)
+		fmt.Println("Click on edit completed successfully")
+
+		time.Sleep(5 * time.Second)
+		fmt.Println("Click on edit completed successfully")
+
+		//Wait for the page to load
+		time.Sleep(5 * time.Second)
+		//add street in address
+		myEmail, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Email']")
+		if err != nil {
+			log.Fatalf("Error finding the name field: %v", err)
+		}
+
+		err = myEmail.SendKeys("arukalarkins@icloud.com")
+		if err != nil {
+			log.Fatalf("Error entering in the name: %v", err)
+		}
+
+		//Wait for the page to load
+		time.Sleep(5 * time.Second)
+		//add street in address
+		myName, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Имя']")
+		if err != nil {
+			log.Fatalf("Error finding the name field: %v", err)
+		}
+
+		err = myName.SendKeys("Aruka")
+		if err != nil {
+			log.Fatalf("Error entering in the name: %v", err)
+		}
+		//Wait for the page to load
+		time.Sleep(5 * time.Second)
+		//add street in address
+		mySurname, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Фамилия']")
+		if err != nil {
+			log.Fatalf("Error finding the name field: %v", err)
+		}
+
+		err = mySurname.SendKeys("Larkins")
+		if err != nil {
+			log.Fatalf("Error entering in the name: %v", err)
+		}
+
+		time.Sleep(5 * time.Second)
+		fmt.Println("Click on edit completed successfully")
+		//Wait for the page to load
+		time.Sleep(5 * time.Second)
+
 		// Find the login button and click it
-		myOrdersButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Мои заказы']")
+		saveButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Сохранить']")
 		if err != nil {
-			log.Fatalf("Error finding the myOrders button: %v", err)
+			log.Fatalf("Error finding the login button: %v", err)
 		}
 
-		err = myOrdersButton.Click()
+		err = saveButton.Click()
 		if err != nil {
-			log.Fatalf("Error clicking the myOrders button: %v", err)
+			log.Fatalf("Error clicking the login button: %v", err)
 		}
+
+		time.Sleep(5 * time.Second)
+		fmt.Println("Click on edit completed successfully")
 
 		//Wait for the page to load
 		time.Sleep(5 * time.Second)
 
-		// Find the 'My addresses' button and click it
-		myAddressesButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Мои адреса']")
+		// Find the login button and click it
+		backButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Назад']")
 		if err != nil {
-			log.Fatalf("Error finding the 'My addresses' button: %v", err)
+			log.Fatalf("Error finding the login button: %v", err)
 		}
 
-		err = myAddressesButton.Click()
+		err = backButton.Click()
 		if err != nil {
-			log.Fatalf("Error clicking the 'My addresses' button: %v", err)
+			log.Fatalf("Error clicking the login button: %v", err)
 		}
+
 		time.Sleep(5 * time.Second)
-
-		// Найти элемент иконки удаления
-		deleteIcon, err := wd.FindElement(selenium.ByXPATH, "//span[@data-v-c89e6434]//*[name()='svg']")
-		if err != nil {
-			log.Fatalf("Ошибка при поиске иконки удаления: %v", err)
-		}
-
-		// Выполнить клик на элементе иконки удаления
-		err = deleteIcon.Click()
-		if err != nil {
-			log.Fatalf("Ошибка при клике на иконке удаления: %v", err)
-		}
-
-		//Wait for the page to load
-		time.Sleep(5 * time.Second)
-
-		// Find the 'My addresses' button and click it
-		deleteButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Нет, не удалять']")
-		if err != nil {
-			log.Fatalf("Error finding the 'Нет, не удалить' button: %v", err)
-		}
-
-		err = deleteButton.Click()
-		if err != nil {
-			log.Fatalf("Error clicking the 'Нет, не удалить' button: %v", err)
-		}
-		time.Sleep(5 * time.Second)
-
-		time.Sleep(10 * time.Second)
 		fmt.Println("Test completed successfully")
 	}
 }

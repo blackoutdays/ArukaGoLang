@@ -122,6 +122,57 @@ func main() {
 	time.Sleep(5 * time.Second)
 	fmt.Println("Click on nested subcatalog completed successfully")
 
+	// Wait for the page to load
 	time.Sleep(5 * time.Second)
-	fmt.Println("Test completed successfully")
+
+	// Find the icon element by XPath
+	sortBy, err := wd.FindElement(selenium.ByXPATH, "//span[@class='icon disable-icon']")
+	if err != nil {
+		log.Fatalf("Error finding the icon: %v", err)
+	}
+
+	// Click on the icon element
+	err = sortBy.Click()
+	if err != nil {
+		log.Fatalf("Error clicking the icon: %v", err)
+	}
+
+	// Add a wait condition to ensure the click action is completed
+	err = wd.WaitWithTimeout(func(wd selenium.WebDriver) (bool, error) {
+
+		// Check if the element is still visible after the click
+		visible, err := sortBy.IsDisplayed()
+		if err != nil {
+			return false, err
+		}
+		// Return true if the element is visible
+		return visible, nil
+	}, 10*time.Second)
+	if err != nil {
+		log.Fatalf("Error waiting for the click action to complete: %v", err)
+	}
+
+	time.Sleep(5 * time.Second)
+	fmt.Println("Click on icon completed successfully")
+
+	// Wait for the page to load
+	time.Sleep(5 * time.Second)
+
+	// Find the icon element by XPath
+	sortBySquare, err := wd.FindElement(selenium.ByXPATH, "//span[@class='icon disable-icon']")
+	if err != nil {
+		log.Fatalf("Error finding the icon: %v", err)
+	}
+
+	// Click on the icon element
+	err = sortBySquare.Click()
+	if err != nil {
+		log.Fatalf("Error clicking the icon: %v", err)
+	}
+
+	time.Sleep(5 * time.Second)
+	fmt.Println("Click on icon 1 completed successfully")
+
+	time.Sleep(5 * time.Second)
+	fmt.Println("successful")
 }

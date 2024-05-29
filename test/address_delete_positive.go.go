@@ -8,6 +8,11 @@ import (
 	"github.com/tebeka/selenium"
 )
 
+const (
+	chromeDriverPath = "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver" // replace with your driver
+	port             = 8080
+)
+
 func main() {
 	var opts []selenium.ServiceOption
 	selenium.SetDebug(false)
@@ -132,31 +137,46 @@ func main() {
 		//Wait for the page to load
 		time.Sleep(5 * time.Second)
 
-		// Find the login button and click it
-		myOrdersButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Мои заказы']")
+		// Find the 'My addresses' button and click it
+		myAddressesButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Мои адреса']")
 		if err != nil {
-			log.Fatalf("Error finding the login button: %v", err)
+			log.Fatalf("Error finding the 'My addresses' button: %v", err)
 		}
 
-		err = myOrdersButton.Click()
+		err = myAddressesButton.Click()
 		if err != nil {
-			log.Fatalf("Error clicking the login button: %v", err)
+			log.Fatalf("Error clicking the 'My addresses' button: %v", err)
+		}
+		time.Sleep(5 * time.Second)
+
+		// Найти элемент иконки удаления
+		deleteIcon, err := wd.FindElement(selenium.ByXPATH, "//span[@data-v-c89e6434]//*[name()='svg']")
+		if err != nil {
+			log.Fatalf("Ошибка при поиске иконки удаления: %v", err)
+		}
+
+		// Выполнить клик на элементе иконки удаления
+		err = deleteIcon.Click()
+		if err != nil {
+			log.Fatalf("Ошибка при клике на иконке удаления: %v", err)
 		}
 
 		//Wait for the page to load
 		time.Sleep(5 * time.Second)
 
-		// Find the login button and click it
-		myAdressesButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Мои адреса']")
+		// Find the 'My addresses' button and click it
+		deleteButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Да, удалить']")
 		if err != nil {
-			log.Fatalf("Error finding the login button: %v", err)
+			log.Fatalf("Error finding the 'Да, удалить' button: %v", err)
 		}
 
-		err = myAdressesButton.Click()
+		err = deleteButton.Click()
 		if err != nil {
-			log.Fatalf("Error clicking the login button: %v", err)
+			log.Fatalf("Error clicking the 'Да, удалить' button: %v", err)
 		}
+		time.Sleep(5 * time.Second)
+
+		time.Sleep(10 * time.Second)
+		fmt.Println("Test completed successfully")
 	}
-	time.Sleep(5 * time.Second)
-	fmt.Println("Test completed successfully")
 }

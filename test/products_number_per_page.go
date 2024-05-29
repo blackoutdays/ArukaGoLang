@@ -122,6 +122,89 @@ func main() {
 	time.Sleep(5 * time.Second)
 	fmt.Println("Click on nested subcatalog completed successfully")
 
+	// Wait for the sorting to be applied
 	time.Sleep(5 * time.Second)
-	fmt.Println("Test completed successfully")
+
+	// Find the sorting option with value "6"
+	sortOption6XPath := "//option[@class='select__select--option' and @value='6']"
+	sortOption6, err := wd.FindElement(selenium.ByXPATH, sortOption6XPath)
+	if err != nil {
+		log.Fatalf("Error finding the sorting option with value '6': %v", err)
+	}
+
+	// Click on the sorting option "6"
+	err = sortOption6.Click()
+	if err != nil {
+		log.Fatalf("Error clicking on the sorting option '6': %v", err)
+	}
+
+	// Wait for the sorting to be applied
+	time.Sleep(5 * time.Second)
+
+	// Print the sorting option text
+	text6, err := sortOption6.Text()
+	if err != nil {
+		log.Fatalf("Error getting the text of the sorting option '6': %v", err)
+	}
+	fmt.Printf("Sorting option selected: %s\n", text6)
+
+	fmt.Println("Sort by 6 items per page completed successfully")
+
+	// Wait for the sorting to be applied
+	time.Sleep(5 * time.Second)
+
+	// Find the sorting option with value "9"
+	sortOption9XPath := "//option[@class='select__select--option' and @value='9']"
+	sortOption9, err := wd.FindElement(selenium.ByXPATH, sortOption9XPath)
+	if err != nil {
+		log.Fatalf("Error finding the sorting option with value '9': %v", err)
+	}
+
+	// Click on the sorting option "9"
+	err = sortOption9.Click()
+	if err != nil {
+		log.Fatalf("Error clicking on the sorting option '9': %v", err)
+	}
+
+	// Wait for the sorting to be applied
+	time.Sleep(5 * time.Second)
+
+	// Print the sorting option text
+	text9, err := sortOption9.Text()
+	if err != nil {
+		log.Fatalf("Error getting the text of the sorting option '9': %v", err)
+	}
+	fmt.Printf("Sorting option selected: %s\n", text9)
+
+	fmt.Println("Sort by 9 items per page completed successfully")
+
+	// Wait for the sorting to be applied
+	time.Sleep(5 * time.Second)
+
+	// Find the sorting option with value "9"
+	sortOption12XPath := "//option[@class='select__select--option' and @value='12']"
+	sortOption12, err := wd.FindElement(selenium.ByXPATH, sortOption12XPath)
+	if err != nil {
+		log.Fatalf("Error finding the sorting option with value '12': %v", err)
+	}
+
+	// Click on the sorting option "9"
+	err = sortOption12.Click()
+	if err != nil {
+		log.Fatalf("Error clicking on the sorting option '12': %v", err)
+	}
+
+	// Wait for the sorting to be applied
+	time.Sleep(5 * time.Second)
+
+	// Print the sorting option text
+	text12, err := sortOption12.Text()
+	if err != nil {
+		log.Fatalf("Error getting the text of the sorting option '12': %v", err)
+	}
+	fmt.Printf("Sorting option selected: %s\n", text12)
+
+	fmt.Println("Sort by 12 items per page completed successfully")
+	time.Sleep(5 * time.Second)
+	fmt.Println("successful")
 }

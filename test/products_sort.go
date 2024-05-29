@@ -122,6 +122,51 @@ func main() {
 	time.Sleep(5 * time.Second)
 	fmt.Println("Click on nested subcatalog completed successfully")
 
+	// Wait for the page to load
 	time.Sleep(5 * time.Second)
+
+	// Find the sorting dropdown
+	sortDropdownXPath := "//select[@class='select__select']"
+	sortDropdown, err := wd.FindElement(selenium.ByXPATH, sortDropdownXPath)
+	if err != nil {
+		log.Fatalf("Error finding the sorting dropdown: %v", err)
+	}
+
+	// Click on the sorting dropdown to activate it
+	err = sortDropdown.Click()
+	if err != nil {
+		log.Fatalf("Error clicking on the sorting dropdown: %v", err)
+	}
+
+	// Find the sorting options
+	sortOptionsXPath := "//option[@class='select__select--option']"
+	sortOptions, err := wd.FindElements(selenium.ByXPATH, sortOptionsXPath)
+	if err != nil {
+		log.Fatalf("Error finding the sorting options: %v", err)
+	}
+
+	// Iterate through each sorting option and apply the sorting
+	for _, option := range sortOptions {
+		text, err := option.Text()
+		if err != nil {
+			log.Fatalf("Error getting the text of the sorting option: %v", err)
+		}
+
+		// Check if the option is one of the desired criteria
+		if text == "По популярности" || text == "По возрастанию цены" || text == "По убыванию цены" {
+			// Click on the current sorting option
+			err = option.Click()
+			if err != nil {
+				log.Fatalf("Error clicking on the sorting option '%s': %v", text, err)
+			}
+
+			// Wait for the sorting to be applied
+			time.Sleep(5 * time.Second)
+
+			fmt.Printf("Sorting by '%s' completed successfully\n", text)
+		}
+	}
+	time.Sleep(5 * time.Second)
+
 	fmt.Println("Test completed successfully")
 }

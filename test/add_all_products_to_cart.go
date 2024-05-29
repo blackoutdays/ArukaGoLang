@@ -1,3 +1,4 @@
+// comment success in english and names in ru pls ;<
 package main
 
 import (
@@ -121,7 +122,74 @@ func main() {
 
 	time.Sleep(5 * time.Second)
 	fmt.Println("Click on nested subcatalog completed successfully")
+	// Wait for the page to load
+	time.Sleep(5 * time.Second)
+
+	// Find the icon element by XPath
+	sortBy, err := wd.FindElement(selenium.ByXPATH, "//span[@class='icon disable-icon']")
+	if err != nil {
+		log.Fatalf("Error finding the icon: %v", err)
+	}
+
+	// Click on the icon element
+	err = sortBy.Click()
+	if err != nil {
+		log.Fatalf("Error clicking the icon: %v", err)
+	}
+
+	// Add a wait condition to ensure the click action is completed
+	err = wd.WaitWithTimeout(func(wd selenium.WebDriver) (bool, error) {
+
+		// Check if the element is still visible after the click
+		visible, err := sortBy.IsDisplayed()
+		if err != nil {
+			return false, err
+		}
+		// Return true if the element is visible
+		return visible, nil
+	}, 10*time.Second)
+	if err != nil {
+		log.Fatalf("Error waiting for the click action to complete: %v", err)
+	}
 
 	time.Sleep(5 * time.Second)
+	fmt.Println("Click on icon completed successfully")
+
+	// Wait for the page to load
+	time.Sleep(5 * time.Second)
+
+	// Find the "Select All" checkbox
+	selectAllXPath := "//input[@type='checkbox' and @id='select-all']"
+	selectAllCheckbox, err := wd.FindElement(selenium.ByXPATH, selectAllXPath)
+	if err != nil {
+		log.Fatalf("Error finding the Выбрать все' checkbox: %v", err)
+	}
+
+	// Click the "Select All" checkbox
+	err = selectAllCheckbox.Click()
+	if err != nil {
+		log.Fatalf("Error clicking the 'Выбрать все' checkbox: %v", err)
+	}
+
+	time.Sleep(2 * time.Second)
+	fmt.Println("Clicked 'Select All' checkbox successfully")
+
+	// Find the "Add to Cart" button
+	addToCartButtonXPath := "//button[contains(@class, 'actions__button ui-button ui-button--colored actions__button')]"
+	addToCartButton, err := wd.FindElement(selenium.ByXPATH, addToCartButtonXPath)
+	if err != nil {
+		log.Fatalf("Error finding the 'Add to Cart' button: %v", err)
+	}
+
+	// Click the "Add to Cart" button
+	err = addToCartButton.Click()
+	if err != nil {
+		log.Fatalf("Error clicking the 'Add to Cart' button: %v", err)
+	}
+
+	time.Sleep(5 * time.Second)
+	fmt.Println("Clicked 'Add to Cart' button successfully")
+
+	time.Sleep(15 * time.Second)
 	fmt.Println("Test completed successfully")
 }

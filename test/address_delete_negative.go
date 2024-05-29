@@ -8,6 +8,11 @@ import (
 	"github.com/tebeka/selenium"
 )
 
+const (
+	chromeDriverPath = "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver" // replace with your driver
+	port             = 8080
+)
+
 func main() {
 	var opts []selenium.ServiceOption
 	selenium.SetDebug(false)
@@ -174,14 +179,14 @@ func main() {
 		time.Sleep(5 * time.Second)
 
 		// Find the 'My addresses' button and click it
-		deleteButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Да, удалить']")
+		deleteButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Нет, не удалять']")
 		if err != nil {
-			log.Fatalf("Error finding the 'Да, удалить' button: %v", err)
+			log.Fatalf("Error finding the 'Нет, не удалить' button: %v", err)
 		}
 
 		err = deleteButton.Click()
 		if err != nil {
-			log.Fatalf("Error clicking the 'Да, удалить' button: %v", err)
+			log.Fatalf("Error clicking the 'Нет, не удалить' button: %v", err)
 		}
 		time.Sleep(5 * time.Second)
 

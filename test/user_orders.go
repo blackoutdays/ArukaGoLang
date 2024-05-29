@@ -8,6 +8,11 @@ import (
 	"github.com/tebeka/selenium"
 )
 
+const (
+	chromeDriverPath = "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver" // replace with your driver
+	port             = 8080
+)
+
 func main() {
 	var opts []selenium.ServiceOption
 	selenium.SetDebug(false)
@@ -114,25 +119,54 @@ func main() {
 		if err != nil {
 			log.Fatalf("Error clicking the login button: %v", err)
 		}
-
 		//Wait for the page to load
 		time.Sleep(5 * time.Second)
 
-		//its was XPATH
-		//<button data-v-7c9cb269="" class="tabs__logout">Выйти из аккаунта</button>
-		//Find the exit button and click it
-		////a[contains(@class, 'categories-menu__subcategories--title') and p[text()='Комплектующие']]
-		exitButton, err := wd.FindElement(selenium.ByXPATH, "//button[text()='Выйти из аккаунта'] ")
+		// Find the login button and click it
+		myOrdersButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Мои заказы']")
 		if err != nil {
-			log.Fatalf("Error finding the exit button %v", err)
+			log.Fatalf("Error finding the login button: %v", err)
 		}
 
-		err = exitButton.Click()
+		err = myOrdersButton.Click()
 		if err != nil {
-			log.Fatalf("Error clicking the exit button %v", err)
+			log.Fatalf("Error clicking the login button: %v", err)
 		}
+
+		// Wait for the page to load
+		time.Sleep(5 * time.Second)
+
+		// Check if the "У вас нет заказов" message is present
+		noOrdersXPath := "//p[contains(text(),'У вас нет заказов')]"
+		noOrdersElement, err := wd.FindElement(selenium.ByXPATH, noOrdersXPath)
+
+		if err == nil && noOrdersElement != nil {
+			// If "У вас нет заказов" is found, click "Перейти к покупкам" button
+			fmt.Println("No orders found. Clicking 'Перейти к покупкам'.")
+			shopButtonXPath := "//p[contains(text(),'Перейти к покупкам')]/ancestor::button"
+			shopButton, err := wd.FindElement(selenium.ByXPATH, shopButtonXPath)
+			if err != nil {
+				log.Fatalf("Error finding 'Перейти к покупкам' button: %v", err)
+			}
+			_, err = wd.ExecuteScript("arguments[0].click();", []interface{}{shopButton})
+			if err != nil {
+				log.Fatalf("Error clicking on 'Перейти к покупкам' button: %v", err)
+			}
+		} else {
+			// If orders are present, click on the first order
+			fmt.Println("Orders found. Clicking on the first order.")
+			firstOrderXPath := "//tbody/tr[1]"
+			firstOrder, err := wd.FindElement(selenium.ByXPATH, firstOrderXPath)
+			if err != nil {
+				log.Fatalf("Error finding the first order: %v", err)
+			}
+			_, err = wd.ExecuteScript("arguments[0].click();", []interface{}{firstOrder})
+			if err != nil {
+				log.Fatalf("Error clicking on the first order: %v", err)
+			}
+		}
+		// Wait for the page to load
+		time.Sleep(5 * time.Second)
+		fmt.Println("Test completed successfully")
 	}
-
-	time.Sleep(5 * time.Second)
-	fmt.Println("Test completed successfully")
 }

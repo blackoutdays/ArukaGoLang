@@ -8,6 +8,11 @@ import (
 	"github.com/tebeka/selenium"
 )
 
+const (
+	chromeDriverPath = "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver" // replace with your driver
+	port             = 8080
+)
+
 func main() {
 	var opts []selenium.ServiceOption
 	selenium.SetDebug(false)
@@ -100,8 +105,63 @@ func main() {
 		if err != nil {
 			log.Fatalf("Error entering SMS code block %d: %v", i+1, err)
 		}
-	}
 
-	time.Sleep(34 * time.Second)
+		// Wait for the page to load
+		time.Sleep(5 * time.Second)
+
+		// Find the login button and click it
+		profileButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='+77778326335']")
+		if err != nil {
+			log.Fatalf("Error finding the login button: %v", err)
+		}
+
+		err = profileButton.Click()
+		if err != nil {
+			log.Fatalf("Error clicking the login button: %v", err)
+		}
+
+		//Wait for the page to load
+		time.Sleep(5 * time.Second)
+
+		// Find the login button and click it
+		personalAccountButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Профиль']")
+		if err != nil {
+			log.Fatalf("Error finding the login button: %v", err)
+		}
+
+		err = personalAccountButton.Click()
+		if err != nil {
+			log.Fatalf("Error clicking the login button: %v", err)
+		}
+
+		//Wait for the page to load
+		time.Sleep(5 * time.Second)
+
+		// Find the login button and click it
+		myOrdersButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Мои заказы']")
+		if err != nil {
+			log.Fatalf("Error finding the login button: %v", err)
+		}
+
+		err = myOrdersButton.Click()
+		if err != nil {
+			log.Fatalf("Error clicking the login button: %v", err)
+		}
+
+		//Wait for the page to load
+		time.Sleep(5 * time.Second)
+
+		// Find the login button and click it
+		myAdressesButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Мои адреса']")
+		if err != nil {
+			log.Fatalf("Error finding the login button: %v", err)
+		}
+
+		err = myAdressesButton.Click()
+		if err != nil {
+			log.Fatalf("Error clicking the login button: %v", err)
+		}
+	}
+	time.Sleep(5 * time.Second)
 	fmt.Println("Test completed successfully")
 }

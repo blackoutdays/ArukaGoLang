@@ -8,6 +8,11 @@ import (
 	"github.com/tebeka/selenium"
 )
 
+const (
+	chromeDriverPath = "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver" // replace with your driver
+	port             = 8080
+)
+
 func main() {
 	var opts []selenium.ServiceOption
 	selenium.SetDebug(false)
@@ -41,17 +46,15 @@ func main() {
 	// Wait for the page to load
 	time.Sleep(5 * time.Second)
 
-	// Find and click the login button
+	// Find the login button and click it
 	loginButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Войти']")
 	if err != nil {
-		fmt.Println("Error finding the login button:", err)
-		return
+		log.Fatalf("Error finding the login button: %v", err)
 	}
 
 	err = loginButton.Click()
 	if err != nil {
-		fmt.Println("Error clicking the login button:", err)
-		return
+		log.Fatalf("Error clicking the login button: %v", err)
 	}
 
 	time.Sleep(2 * time.Second)
@@ -59,18 +62,15 @@ func main() {
 	// Find the phone number input field and enter the phone number
 	phoneNumberField, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Введите номер телефона']")
 	if err != nil {
-		fmt.Println("Error finding the phone number field:", err)
-		return
+		log.Fatalf("Error finding the phone number field: %v", err)
 	}
 
-	err = phoneNumberField.SendKeys("7 708 225 26 75")
+	err = phoneNumberField.SendKeys("7 777 832 63 35")
 	if err != nil {
-		fmt.Println("Error entering phone number:", err)
-		return
+		log.Fatalf("Error entering phone number: %v", err)
 	}
 
-	time.Sleep(20 * time.Second)
-
+	time.Sleep(2 * time.Second)
 	// Find and click the SMS button
 	smsButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Получить код']")
 	if err != nil {
@@ -83,30 +83,30 @@ func main() {
 		return
 	}
 
-	// Wait for the SMS code input field to be present
-	err = wd.WaitWithTimeout(func(wd selenium.WebDriver) (bool, error) {
-		_, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Введите код']")
-		return err == nil, nil
-	}, 10*time.Second)
+	// Wait for the SMS code input fields to be present
+	time.Sleep(5 * time.Second)
+	smsCodeBlocks, err := wd.FindElements(selenium.ByCSSSelector, ".auth__code-form--otp .otp-input-container")
 	if err != nil {
-		fmt.Println("SMS code input field not found:", err)
-		return
+		log.Fatalf("Error finding SMS code blocks: %v", err)
 	}
 
-	smsCodeField, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Введите код']")
-	if err != nil {
-		fmt.Println("Error finding the SMS code input field:", err)
-		return
+	// Input the SMS code blocks
+	smsCode := "0000" // Replace with your actual SMS code
+	for i, block := range smsCodeBlocks {
+		// Find the input field within the current block
+		inputField, err := block.FindElement(selenium.ByCSSSelector, "input")
+		if err != nil {
+			log.Fatalf("Error finding input field in SMS code block %d: %v", i+1, err)
+		}
+
+		// Input the corresponding block of the SMS code into the input field
+		blockCode := smsCode[i*4 : (i+1)*4]
+		err = inputField.SendKeys(blockCode)
+		if err != nil {
+			log.Fatalf("Error entering SMS code block %d: %v", i+1, err)
+		}
 	}
 
-	// Here, you should replace "SMS_CODE" with the actual code received via SMS
-	smsCode := "SMS_CODE" // You need to replace this with the actual code received
-	err = smsCodeField.SendKeys(smsCode)
-	if err != nil {
-		fmt.Println("Error entering SMS code:", err)
-		return
-	}
-
-	time.Sleep(20 * time.Second)
+	time.Sleep(34 * time.Second)
 	fmt.Println("Test completed successfully")
 }

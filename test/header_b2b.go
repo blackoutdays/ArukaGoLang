@@ -8,7 +8,13 @@ import (
 	"github.com/tebeka/selenium"
 )
 
+const (
+	chromeDriverPath = "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver" // replace with your driver path
+	port             = 8080
+)
+
 func main() {
+	// Set up ChromeDriver service
 	var opts []selenium.ServiceOption
 	selenium.SetDebug(false)
 	service, err := selenium.NewChromeDriverService(chromeDriverPath, port, opts...)
@@ -38,23 +44,19 @@ func main() {
 		log.Fatalf("Error opening the page: %v", err)
 	}
 
-	// Wait for the page to load
+	// Find the dropdown element by XPath
+	dropdown, err := wd.FindElement(selenium.ByXPATH, "//a[@class='header-top__top--b2b']")
+	if err != nil {
+		log.Fatalf("Error finding the dropdown element: %v", err)
+	}
+
+	// Click on the dropdown to expand the options
+	if err := dropdown.Click(); err != nil {
+		log.Fatalf("Error clicking on the dropdown: %v", err)
+	}
+
+	// Wait for the page to reload or for changes to take effect
 	time.Sleep(5 * time.Second)
 
-	// Find the 'Favourite' button
-	favouriteBtn, err := wd.FindElement(selenium.ByCSSSelector, ".item-card__actions--item")
-	if err != nil {
-		log.Fatalf("Error finding the 'Add to Favourite': %v", err)
-	}
-
-	// Click the 'Favourite' button
-	if err := favouriteBtn.Click(); err != nil {
-		log.Fatalf("Error clicking on the 'Add to Favourite' button: %v", err)
-	}
-
-	time.Sleep(20 * time.Second)
-	fmt.Println("Product successfully added to favourite!")
-
-	time.Sleep(10 * time.Second)
-	fmt.Println("Test completed successfully")
+	fmt.Println("successful")
 }
