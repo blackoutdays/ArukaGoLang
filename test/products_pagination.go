@@ -1,4 +1,3 @@
-// comment success in english and names in ru pls ;<
 package main
 
 import (
@@ -123,73 +122,23 @@ func main() {
 	time.Sleep(5 * time.Second)
 	fmt.Println("Click on nested subcatalog completed successfully")
 
+	// Wait for the sorting to be applied
 	time.Sleep(5 * time.Second)
 
-	// Find the icon element by XPath
-	sortBy, err := wd.FindElement(selenium.ByXPATH, "//span[@class='icon disable-icon']")
+	// Find the sorting option with value "6"
+	sortOption6XPath := "//div[@class='pagination__arrows--arrow active']/span[@class='icon' and contains(svg/path, 'M6.11376 6.27442L10.7391 10.8869')]"
+
+	sortOption6, err := wd.FindElement(selenium.ByXPATH, sortOption6XPath)
 	if err != nil {
-		log.Fatalf("Error finding the icon: %v", err)
+		log.Fatalf("Error finding the sorting option with value '6': %v", err)
 	}
 
-	// Click on the icon element
-	err = sortBy.Click()
+	// Click on the sorting option "6"
+	err = sortOption6.Click()
 	if err != nil {
-		log.Fatalf("Error clicking the icon: %v", err)
-	}
-
-	// Wait condition to ensure the click action is completed
-	err = wd.WaitWithTimeout(func(wd selenium.WebDriver) (bool, error) {
-
-		// Check if the element is still visible after the click
-		visible, err := sortBy.IsDisplayed()
-		if err != nil {
-			return false, err
-		}
-		// Return true if the element is visible
-		return visible, nil
-	}, 10*time.Second)
-	if err != nil {
-		log.Fatalf("Error waiting for the click action to complete: %v", err)
+		log.Fatalf("Error clicking on the sorting option '6': %v", err)
 	}
 
 	time.Sleep(5 * time.Second)
-	fmt.Println("Click on icon completed successfully")
-
-	// Wait for the page to load
-	time.Sleep(5 * time.Second)
-
-	// Find the "Select All" checkbox
-	selectAllXPath := "//input[@type='checkbox' and @id='select-all']"
-	selectAllCheckbox, err := wd.FindElement(selenium.ByXPATH, selectAllXPath)
-	if err != nil {
-		log.Fatalf("Error finding the 'Выбрать все' checkbox: %v", err)
-	}
-
-	// Click the "Select All" checkbox
-	err = selectAllCheckbox.Click()
-	if err != nil {
-		log.Fatalf("Error clicking the 'Выбрать все' checkbox: %v", err)
-	}
-
-	time.Sleep(2 * time.Second)
-	fmt.Println("Clicked 'Select All' checkbox successfully")
-
-	// Find the "Add to Cart" button
-	addToCartButtonXPath := "//button[contains(@class, 'actions__button ui-button ui-button--colored actions__button')]"
-	addToCartButton, err := wd.FindElement(selenium.ByXPATH, addToCartButtonXPath)
-	if err != nil {
-		log.Fatalf("Error finding the 'Добавить в корзину' button: %v", err)
-	}
-
-	// Click the "Add to Cart" button
-	err = addToCartButton.Click()
-	if err != nil {
-		log.Fatalf("Error clicking the 'Добавить в корзину' button: %v", err)
-	}
-
-	time.Sleep(5 * time.Second)
-	fmt.Println("Clicked 'Добавить в корзину' button successfully")
-
-	time.Sleep(10 * time.Second)
-	fmt.Println("Test completed successfully")
+	fmt.Println("successful")
 }

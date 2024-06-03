@@ -1,4 +1,4 @@
 {
-"chromeDriverPath": "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver",
-"port": 8080
+"chromeDriverPath": "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver", //put here your direction
+"port": 8080 //put here your port
 }

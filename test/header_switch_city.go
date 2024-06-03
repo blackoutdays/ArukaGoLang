@@ -44,7 +44,7 @@ func main() {
 		log.Fatalf("Error opening the page: %v", err)
 	}
 
-	// Find the dropdown element by XPath
+	// Find the dropdown element by XPath (city)
 	dropdown, err := wd.FindElement(selenium.ByXPATH, "//select[@class='header-top__top--city']")
 	if err != nil {
 		log.Fatalf("Error finding the dropdown element: %v", err)

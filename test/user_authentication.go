@@ -104,8 +104,7 @@ func main() {
 		return
 	}
 
-	// Here, you should replace "SMS_CODE" with the actual code received via SMS
-	smsCode := "SMS_CODE" // You need to replace this with the actual code received
+	smsCode := "SMS_CODE" // replace this with the actual code received
 	err = smsCodeField.SendKeys(smsCode)
 	if err != nil {
 		fmt.Println("Error entering SMS code:", err)

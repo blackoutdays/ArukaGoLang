@@ -1,4 +1,3 @@
-// comment success in english and names in ru pls ;<
 package main
 
 import (
@@ -123,73 +122,87 @@ func main() {
 	time.Sleep(5 * time.Second)
 	fmt.Println("Click on nested subcatalog completed successfully")
 
-	time.Sleep(5 * time.Second)
+	// Now find the input fields and the reset button
+	priceInputFieldsXPath := "//div[@class='inputs']//input[@class='inputs__list--input']"
+	resetButtonXPath := "//button[contains(@class, 'reset-button')]"
 
-	// Find the icon element by XPath
-	sortBy, err := wd.FindElement(selenium.ByXPATH, "//span[@class='icon disable-icon']")
-	if err != nil {
-		log.Fatalf("Error finding the icon: %v", err)
-	}
-
-	// Click on the icon element
-	err = sortBy.Click()
-	if err != nil {
-		log.Fatalf("Error clicking the icon: %v", err)
-	}
-
-	// Wait condition to ensure the click action is completed
+	// Wait for the input fields to appear
 	err = wd.WaitWithTimeout(func(wd selenium.WebDriver) (bool, error) {
+		elements, err := wd.FindElements(selenium.ByXPATH, priceInputFieldsXPath)
+		return err == nil && len(elements) == 2, nil
+	}, 20*time.Second)
+	if err != nil {
+		fmt.Println("Error finding the price input fields:", err)
+		return
+	}
 
-		// Check if the element is still visible after the click
-		visible, err := sortBy.IsDisplayed()
+	// Find the input fields
+	priceInputFields, err := wd.FindElements(selenium.ByXPATH, priceInputFieldsXPath)
+	if err != nil {
+		fmt.Println("Error finding the price input fields:", err)
+		return
+	}
+	// Clear the input fields before entering new values
+	err = priceInputFields[0].Clear()
+	if err != nil {
+		fmt.Println("Error clearing the first price input field:", err)
+		return
+	}
+
+	// Check if the second price input field exists and clear it
+	if len(priceInputFields) > 1 {
+		err = priceInputFields[1].Clear()
 		if err != nil {
-			return false, err
+			fmt.Println("Error clearing the second price input field:", err)
+			return
 		}
-		// Return true if the element is visible
-		return visible, nil
+	} else {
+		fmt.Println("Error: Second price input field not found")
+		return
+	}
+
+	// Enter values into the input fields
+	err = priceInputFields[0].SendKeys("100")
+	if err != nil {
+		fmt.Println("Error entering value into the first price input field:", err)
+		return
+	}
+
+	err = priceInputFields[1].SendKeys("50000")
+	if err != nil {
+		fmt.Println("Error entering value into the second price input field:", err)
+		return
+	}
+
+	fmt.Println("Entered values into price input fields successfully")
+
+	time.Sleep(5 * time.Second)
+	// Wait for the reset button to appear
+	err = wd.WaitWithTimeout(func(wd selenium.WebDriver) (bool, error) {
+		_, err := wd.FindElement(selenium.ByXPATH, resetButtonXPath)
+		return err == nil, nil
 	}, 10*time.Second)
 	if err != nil {
-		log.Fatalf("Error waiting for the click action to complete: %v", err)
+		fmt.Println("Error finding the reset button:", err)
+		return
 	}
+
+	// Find the reset button
+	resetButton, err := wd.FindElement(selenium.ByXPATH, resetButtonXPath)
+	if err != nil {
+		fmt.Println("Error finding the reset button:", err)
+		return
+	}
+
+	// Click the reset button
+	err = resetButton.Click()
+	if err != nil {
+		fmt.Println("Error clicking the reset button:", err)
+		return
+	}
+
+	fmt.Println("Clicked the reset button successfully")
 
 	time.Sleep(5 * time.Second)
-	fmt.Println("Click on icon completed successfully")
-
-	// Wait for the page to load
-	time.Sleep(5 * time.Second)
-
-	// Find the "Select All" checkbox
-	selectAllXPath := "//input[@type='checkbox' and @id='select-all']"
-	selectAllCheckbox, err := wd.FindElement(selenium.ByXPATH, selectAllXPath)
-	if err != nil {
-		log.Fatalf("Error finding the 'Выбрать все' checkbox: %v", err)
-	}
-
-	// Click the "Select All" checkbox
-	err = selectAllCheckbox.Click()
-	if err != nil {
-		log.Fatalf("Error clicking the 'Выбрать все' checkbox: %v", err)
-	}
-
-	time.Sleep(2 * time.Second)
-	fmt.Println("Clicked 'Select All' checkbox successfully")
-
-	// Find the "Add to Cart" button
-	addToCartButtonXPath := "//button[contains(@class, 'actions__button ui-button ui-button--colored actions__button')]"
-	addToCartButton, err := wd.FindElement(selenium.ByXPATH, addToCartButtonXPath)
-	if err != nil {
-		log.Fatalf("Error finding the 'Добавить в корзину' button: %v", err)
-	}
-
-	// Click the "Add to Cart" button
-	err = addToCartButton.Click()
-	if err != nil {
-		log.Fatalf("Error clicking the 'Добавить в корзину' button: %v", err)
-	}
-
-	time.Sleep(5 * time.Second)
-	fmt.Println("Clicked 'Добавить в корзину' button successfully")
-
-	time.Sleep(10 * time.Second)
 	fmt.Println("Test completed successfully")
 }

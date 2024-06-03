@@ -137,20 +137,6 @@ func main() {
 		//Wait for the page to load
 		time.Sleep(5 * time.Second)
 
-		// Find the login button and click it
-		myOrdersButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Мои заказы']")
-		if err != nil {
-			log.Fatalf("Error finding the myOrders button: %v", err)
-		}
-
-		err = myOrdersButton.Click()
-		if err != nil {
-			log.Fatalf("Error clicking the myOrders button: %v", err)
-		}
-
-		//Wait for the page to load
-		time.Sleep(5 * time.Second)
-
 		// Find the 'My addresses' button and click it
 		myAddressesButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Мои адреса']")
 		if err != nil {
@@ -164,7 +150,7 @@ func main() {
 		time.Sleep(5 * time.Second)
 
 		// Найти элемент иконки удаления
-		deleteIcon, err := wd.FindElement(selenium.ByXPATH, "//span[@data-v-c89e6434]//*[name()='svg']")
+		deleteIcon, err := wd.FindElement(selenium.ByXPATH, "//div[@class='address-card__title']//span[@class='icon']")
 		if err != nil {
 			log.Fatalf("Ошибка при поиске иконки удаления: %v", err)
 		}

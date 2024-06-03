@@ -46,15 +46,15 @@ func main() {
 	// Wait for the page to load
 	time.Sleep(5 * time.Second)
 
-	// Find the 'Add to Cart' button
+	// Find the 'В корзину' button
 	addToCartButton, err := wd.FindElement(selenium.ByXPATH, "//button[@class='item-card__button ui-button ui-button--colored item-card__button']//p[@class='item-card__button--text' and text()='В корзину']")
 	if err != nil {
-		log.Fatalf("Error finding the 'Add to Cart' button: %v", err)
+		log.Fatalf("Error finding the 'В корзину' button: %v", err)
 	}
 
 	// Click the 'Add to Cart' button
 	if err := addToCartButton.Click(); err != nil {
-		log.Fatalf("Error clicking on the 'Add to Cart' button: %v", err)
+		log.Fatalf("Error clicking on the 'В корзину' button: %v", err)
 	}
 
 	// Wait to ensure the product is added to the cart

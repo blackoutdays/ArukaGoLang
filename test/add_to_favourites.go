@@ -64,10 +64,10 @@ func main() {
 
 	// Click the 'Favourite' button
 	if err := favouriteBtn.Click(); err != nil {
-		log.Fatalf("Error clicking on the 'Add to Favourite' button: %v", err)
+		log.Fatalf("Error clicking on the 'Add to favourite' button: %v", err)
 	}
 
-	time.Sleep(20 * time.Second)
+	time.Sleep(10 * time.Second)
 	fmt.Println("Product successfully added to favourite!")
 
 	time.Sleep(10 * time.Second)

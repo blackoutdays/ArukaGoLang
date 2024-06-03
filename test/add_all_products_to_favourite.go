@@ -44,7 +44,7 @@ func main() {
 		log.Fatalf("Error opening the page: %v", err)
 	}
 
-	// Use explicit wait to find the catalog button
+	// Explicit wait to find the catalog button
 	catalogButtonXPath := "//button[contains(@class, 'header__bottom--catalog')]"
 	err = wd.WaitWithTimeout(func(wd selenium.WebDriver) (bool, error) {
 		_, err := wd.FindElement(selenium.ByXPATH, catalogButtonXPath)
@@ -77,24 +77,24 @@ func main() {
 		return err == nil, nil
 	}, 10*time.Second)
 	if err != nil {
-		fmt.Println("Error finding the subcatalog button:", err)
+		fmt.Println("Error finding the subcatalog 'Компьютеры' button:", err)
 		return
 	}
 
 	subCatalogButton, err := wd.FindElement(selenium.ByXPATH, subCatalogButtonXPath)
 	if err != nil {
-		fmt.Println("Error finding the subcatalog button:", err)
+		fmt.Println("Error finding the subcatalog 'Компьютеры' button:", err)
 		return
 	}
 
 	err = subCatalogButton.Click()
 	if err != nil {
-		fmt.Println("Error clicking the subcatalog button:", err)
+		fmt.Println("Error clicking the subcatalog 'Компьютеры' button:", err)
 		return
 	}
 
 	time.Sleep(5 * time.Second)
-	fmt.Println("Click on subcatalog completed successfully")
+	fmt.Println("Click on subcatalog 'Компьютеры' completed successfully")
 
 	// Continue with finding the nested subcatalog for "Комплектующие"
 	nestedSubCatalogXPath := "//a[contains(@class, 'categories-menu__subcategories--title') and p[text()='Комплектующие']]"
@@ -103,24 +103,25 @@ func main() {
 		return err == nil, nil
 	}, 10*time.Second)
 	if err != nil {
-		fmt.Println("Error finding the nested subcatalog link:", err)
+		fmt.Println("Error finding the nested subcatalog 'Комплектующие' link:", err)
 		return
 	}
 
 	nestedSubCatalogLink, err := wd.FindElement(selenium.ByXPATH, nestedSubCatalogXPath)
 	if err != nil {
-		fmt.Println("Error finding the nested subcatalog link:", err)
+		fmt.Println("Error finding the nested subcatalog 'Комплектующие' link:", err)
 		return
 	}
 
 	err = nestedSubCatalogLink.Click()
 	if err != nil {
-		fmt.Println("Error clicking the nested subcatalog link:", err)
+		fmt.Println("Error clicking the nested subcatalog 'Комплектующие' link:", err)
 		return
 	}
 
 	time.Sleep(5 * time.Second)
-	fmt.Println("Click on nested subcatalog completed successfully")
+	fmt.Println("Click on nested subcatalog 'Комплектующие' completed successfully")
+
 	// Wait for the page to load
 	time.Sleep(5 * time.Second)
 
@@ -173,22 +174,22 @@ func main() {
 	time.Sleep(2 * time.Second)
 	fmt.Println("Clicked 'Select All' checkbox successfully")
 
-	time.Sleep(12 * time.Second)
+	time.Sleep(10 * time.Second)
 
 	// Найти кнопку "Добавить в избранное"
 	favoriteButtonXPath := "//div[@class='products__list--select-all']//div[@class='actions__list--item']//span[@class='icon']"
 	favoriteButton, err := wd.FindElement(selenium.ByXPATH, favoriteButtonXPath)
 	if err != nil {
-		log.Fatalf("Ошибка поиска кнопки 'Добавить в избранное': %v", err)
+		log.Fatalf("Error finding the 'Добавить в избранное' button: %v", err)
 	}
 
 	// Кликнуть на кнопку "Добавить в избранное"
 	err = favoriteButton.Click()
 	if err != nil {
-		log.Fatalf("Ошибка клика на кнопку 'Добавить в избранное': %v", err)
+		log.Fatalf("Error finding the 'Добавить в избранное' button: %v", err)
 	}
 
-	fmt.Println("Кнопка 'Добавить в избранное' нажата успешно")
+	fmt.Println("Clicked 'Добавить в избранное' button successfully")
 
 	time.Sleep(15 * time.Second)
 	fmt.Println("Test completed successfully")
