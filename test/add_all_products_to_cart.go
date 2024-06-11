@@ -124,7 +124,6 @@ func main() {
 	fmt.Println("Click on nested subcatalog completed successfully")
 
 	time.Sleep(5 * time.Second)
-
 	// Find the icon element by XPath
 	sortBy, err := wd.FindElement(selenium.ByXPATH, "//span[@class='icon disable-icon']")
 	if err != nil {
@@ -187,7 +186,6 @@ func main() {
 		log.Fatalf("Error clicking the 'Добавить в корзину' button: %v", err)
 	}
 
-	time.Sleep(5 * time.Second)
 	fmt.Println("Clicked 'Добавить в корзину' button successfully")
 
 	time.Sleep(10 * time.Second)

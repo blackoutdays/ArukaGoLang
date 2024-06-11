@@ -61,12 +61,12 @@ func main() {
 	time.Sleep(5 * time.Second)
 
 	// Найти элементы чата
-	whatsappButton, err := wd.FindElement(selenium.ByCSSSelector, "button.whatsapp-button")
+	whatsappButton, err := wd.FindElement(selenium.ByXPATH, "//button[@class='social-button whatsapp-button']")
 	if err != nil {
 		log.Fatalf("Ошибка нахождения кнопки WhatsApp: %v", err)
 	}
 
-	telegramButton, err := wd.FindElement(selenium.ByCSSSelector, "button.telegram-button")
+	telegramButton, err := wd.FindElement(selenium.ByXPATH, "//button[@class='social-button telegram-button']")
 	if err != nil {
 		log.Fatalf("Ошибка нахождения кнопки Telegram: %v", err)
 	}

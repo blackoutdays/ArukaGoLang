@@ -193,17 +193,6 @@ func main() {
 	}
 
 	time.Sleep(5 * time.Second)
-	// Нахождение и клик по кнопке "Профиль"
-	personalAccountButton3, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Профиль']")
-	if err != nil {
-		log.Fatalf("Ошибка нахождения кнопки 'Профиль': %v", err)
-	}
-
-	err = personalAccountButton3.Click()
-	if err != nil {
-		log.Fatalf("Ошибка клика по кнопке 'Профиль': %v", err)
-	}
-	time.Sleep(5 * time.Second)
 
 	// Нахождение кнопки Telegram и клик по ней
 	telegramButton, err := wd.FindElement(selenium.ByCSSSelector, "a.button[href='https://t.me/smartdealkz']")

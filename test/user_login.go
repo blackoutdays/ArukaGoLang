@@ -107,6 +107,6 @@ func main() {
 		}
 	}
 
-	time.Sleep(34 * time.Second)
+	time.Sleep(5 * time.Second)
 	fmt.Println("Test completed successfully")
 }

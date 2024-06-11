@@ -142,24 +142,22 @@ func main() {
 		fmt.Println("Error finding the price input fields:", err)
 		return
 	}
-	// Clear the input fields before entering new values
+
+	// Clear the input fields directly
 	err = priceInputFields[0].Clear()
 	if err != nil {
 		fmt.Println("Error clearing the first price input field:", err)
 		return
 	}
 
-	// Check if the second price input field exists and clear it
-	if len(priceInputFields) > 1 {
-		err = priceInputFields[1].Clear()
-		if err != nil {
-			fmt.Println("Error clearing the second price input field:", err)
-			return
-		}
-	} else {
-		fmt.Println("Error: Second price input field not found")
+	err = priceInputFields[1].Clear()
+	if err != nil {
+		fmt.Println("Error clearing the second price input field:", err)
 		return
 	}
+
+	// Ensure both fields are cleared
+	time.Sleep(1 * time.Second)
 
 	// Enter values into the input fields
 	err = priceInputFields[0].SendKeys("100")
