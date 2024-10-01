@@ -8,7 +8,7 @@ import (
 
 type Config struct {
 	ChromeDriverPath string `json:"/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver"`
-	Port             int    `json:"8080"`
+	Port             int    `json:"8081"`
 }
 
 var AppConfig Config

@@ -1,3 +1,4 @@
+// main.go
 package main
 
 import (
@@ -9,8 +10,8 @@ import (
 )
 
 const (
-	chromeDriverPath = "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver"
-	port             = 8080
+	chromeDriverPath = "/Users/aruka/Downloads/chromedriver_mac_arm64-2/chromedriver" // replace with your driver
+	port             = 8989
 )
 
 func main() {
@@ -82,7 +83,7 @@ func main() {
 	} else {
 		// If favorite items are present, click on the first item card
 		fmt.Println("Items found in favorites. Clicking on the first item.")
-		firstItemXPath := "//div[@class='items-list__items']//div[@class='item-card'][1]//button[@class='item-card__button']"
+		firstItemXPath := "//div[@class='items-list__items']//a[@class='item-card__title']"
 		firstItem, err := wd.FindElement(selenium.ByXPATH, firstItemXPath)
 		if err != nil {
 			log.Fatalf("Error finding the first item: %v", err)

@@ -1,3 +1,4 @@
+// main.go
 package main
 
 import (
@@ -9,8 +10,8 @@ import (
 )
 
 const (
-	chromeDriverPath = "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver" // replace with your driver
-	port             = 8080
+	chromeDriverPath = "/Users/aruka/Downloads/chromedriver_mac_arm64-2/chromedriver" // replace with your driver
+	port             = 8989
 )
 
 func main() {
@@ -26,7 +27,6 @@ func main() {
 		}
 	}()
 
-	// Connect to the WebDriver
 	caps := selenium.Capabilities{"browserName": "chrome"}
 	wd, err := selenium.NewRemote(caps, fmt.Sprintf("http://localhost:%d/wd/hub", port))
 	if err != nil {
@@ -38,15 +38,12 @@ func main() {
 		}
 	}()
 
-	// Navigate to the website
 	if err := wd.Get("https://smartdeal.kz/"); err != nil {
 		log.Fatalf("Error opening the page: %v", err)
 	}
 
-	// Wait for the page to load
 	time.Sleep(5 * time.Second)
 
-	// Find the login button and click it
 	loginButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Войти']")
 	if err != nil {
 		log.Fatalf("Error finding the login button: %v", err)
@@ -60,7 +57,6 @@ func main() {
 
 	time.Sleep(2 * time.Second)
 
-	// Find the phone number input field and enter the phone number
 	phoneNumberField, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Введите номер телефона']")
 	if err != nil {
 		log.Fatalf("Error finding the phone number field: %v", err)
@@ -74,7 +70,7 @@ func main() {
 	fmt.Println("Phone number entered successfully")
 
 	time.Sleep(2 * time.Second)
-	// Find and click the SMS button
+
 	smsButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Получить код']")
 	if err != nil {
 		fmt.Println("Error finding the SMS button:", err)
@@ -88,23 +84,19 @@ func main() {
 
 	fmt.Println("SMS button clicked successfully")
 
-	// Wait for the SMS code input fields to be present
 	time.Sleep(5 * time.Second)
 	smsCodeBlocks, err := wd.FindElements(selenium.ByCSSSelector, ".auth__code-form--otp .otp-input-container")
 	if err != nil {
 		log.Fatalf("Error finding SMS code blocks: %v", err)
 	}
 
-	// Input the SMS code blocks
 	smsCode := "0000" // Replace with your actual SMS code
 	for i, block := range smsCodeBlocks {
-		// Find the input field within the current block
 		inputField, err := block.FindElement(selenium.ByCSSSelector, "input")
 		if err != nil {
 			log.Fatalf("Error finding input field in SMS code block %d: %v", i+1, err)
 		}
 
-		// Input the corresponding block of the SMS code into the input field
 		blockCode := smsCode[i*4 : (i+1)*4]
 		err = inputField.SendKeys(blockCode)
 		if err != nil {
@@ -113,16 +105,13 @@ func main() {
 
 		fmt.Println("SMS code entered successfully")
 
-		// Wait for the page to load
 		time.Sleep(5 * time.Second)
 
-		// Find the profile button
 		profileButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='+77778326335']")
 		if err != nil {
 			log.Fatalf("Error finding the profile button: %v", err)
 		}
 
-		// Click the profile button
 		err = profileButton.Click()
 		if err != nil {
 			log.Fatalf("Error clicking the profile button: %v", err)
@@ -130,16 +119,13 @@ func main() {
 
 		fmt.Println("Profile button clicked successfully")
 
-		//Wait for the page to load
 		time.Sleep(5 * time.Second)
 
-		// Find the profile information button
 		personalAccountButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Профиль']")
 		if err != nil {
 			log.Fatalf("Error finding the login button: %v", err)
 		}
 
-		// Click the profile information button and click it
 		err = personalAccountButton.Click()
 		if err != nil {
 			log.Fatalf("Error clicking the login button: %v", err)
@@ -147,10 +133,8 @@ func main() {
 
 		fmt.Println("Profile information button clicked successfully")
 
-		//Wait for the page to load
 		time.Sleep(5 * time.Second)
 
-		// Find the 'Мои адреса' button and click it
 		myAddressesButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Мои адреса']")
 		if err != nil {
 			log.Fatalf("Error finding the 'Мои адреса' button: %v", err)
@@ -164,7 +148,6 @@ func main() {
 
 		fmt.Println("Button 'Мои адреса' clicked successfully")
 
-		// 'My addresses' edit
 		time.Sleep(5 * time.Second)
 		myAddressesAddButton, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Добавить новый адрес']")
 		if err != nil {
@@ -178,19 +161,6 @@ func main() {
 
 		fmt.Println("Button 'Добавить новый адрес' clicked successfully")
 
-		// Find the dropdown element by XPath (city)
-		dropdown, err := wd.FindElement(selenium.ByXPATH, "//select[@class='select__select']")
-		if err != nil {
-			log.Fatalf("Error finding the dropdown city selection element: %v", err)
-		}
-
-		// Click on the dropdown (city) to expand the options
-		if err := dropdown.Click(); err != nil {
-			log.Fatalf("Error clicking on the dropdown city selection: %v", err)
-		}
-		fmt.Println("Dropdown city selection (Almaty) completed successfully")
-
-		//Wait for the page to load
 		time.Sleep(5 * time.Second)
 		//add street in address
 		addressStreetField, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Улица/микрорайон, № дома']")
@@ -207,7 +177,6 @@ func main() {
 
 		time.Sleep(5 * time.Second)
 
-		//add a floor in the address
 		addressFloorField, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Этаж']")
 		if err != nil {
 			log.Fatalf("Error finding the address floor field: %v", err)
@@ -221,7 +190,7 @@ func main() {
 		fmt.Println("Field 'Этаж' completed successfully")
 
 		time.Sleep(5 * time.Second)
-		//add an apartment/office building in the address
+
 		addressBldgField, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Кв./офис']")
 		if err != nil {
 			log.Fatalf("Error finding the address building (apartmnet/office field: %v", err)
@@ -236,7 +205,6 @@ func main() {
 
 		time.Sleep(5 * time.Second)
 
-		//Click button to Добавить'
 		addAddress, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Добавить']")
 		if err != nil {
 			log.Fatalf("Error finding the 'Добавить' button: %v", err)
@@ -251,7 +219,6 @@ func main() {
 
 		time.Sleep(5 * time.Second)
 
-		//click button to 'Edit'
 		editAddress, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Изменить']")
 		if err != nil {
 			log.Fatalf("Error finding the 'Изменить' button: %v", err)
@@ -266,7 +233,6 @@ func main() {
 
 		time.Sleep(5 * time.Second)
 
-		//edit the field 'Улица/микрорайон, № дома' in address
 		addressSavedStreetField, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Улица/микрорайон, № дома']")
 		if err != nil {
 			log.Fatalf("Error finding the address street field: %v", err)
@@ -288,7 +254,6 @@ func main() {
 
 		time.Sleep(5 * time.Second)
 
-		//edit the field 'Этаж' in address
 		addressSavedFloorField, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Этаж']")
 		if err != nil {
 			log.Fatalf("Error finding the address floor field: %v", err)
@@ -310,7 +275,6 @@ func main() {
 
 		time.Sleep(5 * time.Second)
 
-		//edit the field 'Кв./офис' in address
 		addressSavedBldgField, err := wd.FindElement(selenium.ByXPATH, "//input[@placeholder='Кв./офис']")
 		if err != nil {
 			log.Fatalf("Error finding the address 'Кв./офис' field: %v", err)
@@ -332,7 +296,6 @@ func main() {
 
 		time.Sleep(5 * time.Second)
 
-		// Click the 'Изменить' button
 		addEditedAddress, err := wd.FindElement(selenium.ByXPATH, "//p[text()='Изменить']")
 		if err != nil {
 			log.Fatalf("Error finding the 'Изменить' button: %v", err)

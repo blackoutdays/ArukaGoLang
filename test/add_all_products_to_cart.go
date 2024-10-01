@@ -1,4 +1,4 @@
-// comment success in english and names in ru pls ;<
+// main.go
 package main
 
 import (
@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	chromeDriverPath = "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver" // replace with your driver
-	port             = 8080
+	chromeDriverPath = "/Users/aruka/Downloads/chromedriver_mac_arm64-2/chromedriver" // replace with your driver
+	port             = 8989
 )
 
 func main() {
@@ -171,7 +171,7 @@ func main() {
 	}
 
 	time.Sleep(2 * time.Second)
-	fmt.Println("Clicked 'Select All' checkbox successfully")
+	fmt.Println("Clicked 'Выбрать все' checkbox successfully")
 
 	// Find the "Add to Cart" button
 	addToCartButtonXPath := "//button[contains(@class, 'actions__button ui-button ui-button--colored actions__button')]"

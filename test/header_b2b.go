@@ -1,3 +1,4 @@
+// main.go
 package main
 
 import (
@@ -9,8 +10,8 @@ import (
 )
 
 const (
-	chromeDriverPath = "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver" // replace with your driver path
-	port             = 8080
+	chromeDriverPath = "/Users/aruka/Downloads/chromedriver_mac_arm64-2/chromedriver" // replace with your driver
+	port             = 8989
 )
 
 func main() {
@@ -44,8 +45,10 @@ func main() {
 		log.Fatalf("Error opening the page: %v", err)
 	}
 
+	time.Sleep(5 * time.Second)
+
 	// Find the dropdown element by XPath
-	dropdown, err := wd.FindElement(selenium.ByXPATH, "//a[@class='header-top__top--b2b']")
+	dropdown, err := wd.FindElement(selenium.ByXPATH, "//div[@class='header-top__top--info']//a[@class='header-top__top--b2b']")
 	if err != nil {
 		log.Fatalf("Error finding the dropdown element: %v", err)
 	}
@@ -55,8 +58,10 @@ func main() {
 		log.Fatalf("Error clicking on the dropdown: %v", err)
 	}
 
+	fmt.Println("Clicked on the dropdown")
+
 	// Wait for the page to reload or for changes to take effect
 	time.Sleep(5 * time.Second)
 
-	fmt.Println("successful")
+	fmt.Println("Test completed successfully")
 }

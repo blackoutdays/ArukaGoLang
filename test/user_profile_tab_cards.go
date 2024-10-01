@@ -1,5 +1,4 @@
-//comment success in english and names in ru pls ;<
-
+// main.go
 package main
 
 import (
@@ -11,8 +10,8 @@ import (
 )
 
 const (
-	chromeDriverPath = "/Users/aruka/Downloads/chromedriver-mac-arm64-2/chromedriver" // замените на путь к вашему драйверу
-	port             = 8080
+	chromeDriverPath = "/Users/aruka/Downloads/chromedriver_mac_arm64-2/chromedriver" // replace with your driver
+	port             = 8989
 )
 
 func main() {
